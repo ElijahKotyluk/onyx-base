@@ -1,0 +1,7 @@
+{
+  "name": "onyx",
+  "version": "1.0.0",
+  "description": "Javascript unit test framework.",
+  "main": "index.js",
+  "license": "MIT"
+}

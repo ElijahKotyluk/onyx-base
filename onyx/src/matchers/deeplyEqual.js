@@ -1,9 +1,9 @@
-// Deeply identical matcher:
+// deepEqual matcher:
 
 // Import node assert module;
 const assert = require('assert');
 
-// TODO Test speed:
+// TODO Test speed of assert.deepEqual():
 module.exports = (a, b) => {
   if (assert.deepEqual(a, b)) return true;
 
@@ -12,8 +12,8 @@ module.exports = (a, b) => {
 };
 
 /*
-Vanilla js deep identical matcher:
-const deepEqual = (a, b) => {
+// Vanilla js deeply equal matcher:
+module.exports = deeplyEqual = (a, b) => {
 
   // Check if objects are the same:
   if (a === b) {
@@ -21,16 +21,8 @@ const deepEqual = (a, b) => {
   }
 
   // If both objects are null; if the number of keys for both objects are not equal; return false;
-  else if ((typeOf a == 'object' && a != null) && (typeof b == 'object' && b != null)) {
+  else if ((typeof a == 'object' && a != null) && (typeof b == 'object' && b != null)) {
     if (Object.keys(a).length != Object.keys(b).length) return false;
-
-
-    // .forEach?
-    a.forEach((prop) => {
-      if(b.hasOwnProperty(prop)) {
-        if(! deepEqual(a[prop], b[prop])) return false;
-      }
-    });
 
     // for loop?
     for(let prop in a) {
@@ -44,5 +36,5 @@ const deepEqual = (a, b) => {
     return true;
   }
   else return false;
-}
+};
 */

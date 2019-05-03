@@ -1,4 +1,4 @@
-// Identical matcher:
+// Indentical matcher; Check if params are identical:
 
 module.exports = (a, b) => {
   if (a == b) return true;

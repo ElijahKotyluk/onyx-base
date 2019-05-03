@@ -1,41 +1,67 @@
 /* Onyx unit testing library index.js file */
 
+// Import colors:
 const colors = require('colors');
+
+// Import matchers:
+const matchers = require('./matchers');
+
+const onyx = {
+  SILENT: false
+};
 
 // Format vars:
 const repeat = (str, n) => Array(n).join(str);
 const indent = n => repeat('    ', n);
 const indentLines = (str, n) => indent(n) + str.replace(/\n/g,  `\n${indent(n)}`);
 
-// Test summary:
+// Run every beforeEach callback:
+const runEveryBeforeEach = () => {
+  beforeEachStack.forEach((level) => level.forEach(cb => cb()));
+};
+
+// Logs a string to the console:
+const log = str => !onyx.SILENT && console.log(str);
+
+// Test summary counters:
 const summary = { successful: 0, failed: 0, disabled: 0 };
 
+// The stack of beforeEach callbacks:
+const beforeEachStack = [ [] ];
 let indentLevel = 0;
 
 // Group:
 const group = (desc, cb) => {
+  beforeEachStack.push([]);
   indentLevel++;
-  console.log(`\n${indent(indentLevel)}⇨ ${desc}`.yellow);
+  log(`\n${indent(indentLevel)}⇨ ${desc}`.yellow);
   cb();
   indentLevel--;
+  beforeEachStack.pop();
 };
+
+// Disable group:
+const xgroup = (desc, cb) => {
+  log(`${indent(indentLevel + 1)}${' DISABLED '.bgWhite.black} ${desc.gray}`);
+  summary.disabled++;
+}
 
 // Test:
 const test = (desc, cb) => {
   try {
     cb();
-    console.log(`${indent(indentLevel + 1)}${' OK '.bgGreen.black} ${desc.green}`);
+    log(`${indent(indentLevel + 1)}${' OK '.bgGreen.black} ${desc.green}`);
     summary.successful++;
   } catch(err) {
-    console.log(`${indent(indentLevel + 1)}${' FAIL '.bgRed.black} ${desc.red}`);
-    console.log(err.stack.red);
+    log(`${indent(indentLevel + 1)}${' FAIL '.bgRed.black} ${desc.red}`);
+    log(err.stack.red);
     summary.failed++;
   }
 };
 
 // Disable test:
 const xtest = (desc, cb) => {
-  console.log(`${indent(indentLevel + 1)}${' DISABLED '.bgWhite.black} ${desc.gray}`);
+  log(`${indent(indentLevel + 1)}${' DISABLED '.bgWhite.black} ${desc.gray}`);
   summary.disabled++;
 };
 
@@ -46,16 +72,28 @@ const expect = (value) => {
   throw new Error('Assertion failed.');
 };
 
+Object.assign(expect, matchers);
+
 // Prints finished test results to the console:
 const complete = () => {
-  console.log(`\n.......\n`);
-  console.log('Test summary:\n');
-  console.log(`   Successful: ${summary.successful}`.green);
-  console.log(`   Failed: ${summary.failed}`.red);
-  console.log(`   Disabled: ${summary.disabled}\n\n`.gray);
+  log(`\n.......\n`);
+  log('Test summary:\n');
+  log(`   Successful: ${summary.successful}`.green);
+  log(`   Failed: ${summary.failed}`.red);
+  log(`   Disabled: ${summary.disabled}\n\n`.gray);
 
   if (summary.fail > 0) process.exit(1);
   process.exit(0);
 };
 
-module.exports = { expect, test, xtest, complete, group };
+// Temp beforeAll function:
+const beforeAll = cb => cb();
+
+// Temp beforeEach function:
+const beforeEach = cb => {
+  beforeEachStack[beforeEachStack.length -1].push(cb);
+};
+
+const dsl = { expect, test, xtest, complete, group, xgroup, beforeEach, beforeAll };
+
+module.exports = Object.assign(onyx, dsl);

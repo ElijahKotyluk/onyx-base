@@ -2,6 +2,9 @@
   "name": "onyx",
   "version": "1.0.0",
   "description": "Javascript unit test framework.",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.3.3"
+  }
 }

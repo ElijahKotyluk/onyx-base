@@ -24,7 +24,7 @@ Filenames denoted with an asterisk `*` are auto generated and should not be modi
   - `src/` : Onyx src directory.
   - `package.json` : Onyx package.json.
 - `playground/` : Test playground for Onyx.
-  - `src/` : Playground src directory.
-  - `tests/` : Playground package.json.
+  - `src/` : Onyx playground src directory.
+  - `tests/` : Onyx playground tests.
   - `package.json` : Onyx playground package.json.
 - `README.md` : Onyx readme.

@@ -77,7 +77,7 @@ Object.assign(expect, matchers);
 // Prints finished test results to the console:
 const complete = () => {
   log(`\n.......\n`);
-  log('Test summary:\n');
+  log(`Test summary:\n`);
   log(`   Successful: ${summary.successful}`.green);
   log(`   Failed: ${summary.failed}`.red);
   log(`   Disabled: ${summary.disabled}\n\n`.gray);

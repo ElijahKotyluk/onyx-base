@@ -2,7 +2,7 @@
 
 module.exports = {
   identical: require('./identical'),
-  toSame: require('./toSame'),
+  exact: require('./exact'),
   truthy: require('./truthy'),
   falsy: require('./falsy'),
   toThrow: require('./toThrow'),

@@ -7,7 +7,7 @@ test('playing with our new matchers', () => {
   expect.falsy(null);
   const a = { whatever: 777 };
   const b = a;
-  expect.toSame(a, b);
+  expect.exact(a, b);
   expect.identical(undefined, null);
   const c = { whatever: { foo: { bar: 'baz' } } };
   const d = Object.assign({}, c);

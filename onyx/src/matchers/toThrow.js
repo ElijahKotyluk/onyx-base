@@ -6,8 +6,8 @@ module.exports = (fn, errorMsg = '') => {
     try {
       fn();
       throw didNotThrowError;
-    } catch (e) {
-      if (e === didNotThrowError) throw didNotThrowError;
+    } catch (err) {
+      if (err === didNotThrowError) throw didNotThrowError;
       if (!errorMsg || e.message === errorMsg) return true;
 
       throw new Error('The error message is different from the expected one.' +
